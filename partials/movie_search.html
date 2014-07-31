@@ -1,0 +1,17 @@
+<div id="container" >
+    <div id="inpcontainer">
+        <input ng-keydown="callAjax($event)" type="text" id="search" ng-model="name" placeholder="Enter data here"/>
+    </div>
+    <div class="datacontainer">
+        <div  ng-repeat="movie in movies" class="divimg" >
+            <div class="data">
+                {{movie.original_title}}
+                {{movie.release_date}}
+                {{movie.popularity}}
+                {{movie.vote_average}}
+                {{movie.vote_count}}
+            </div>
+            <a href="{{movie.nav_url}}" ><img class="img" width="250px" ng-src="{{movie.poster_path}}"></a>
+        </div>
+    </div>
+</div>

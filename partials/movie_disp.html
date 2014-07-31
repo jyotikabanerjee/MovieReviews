@@ -1,0 +1,31 @@
+
+<div>
+    <!--<div>{{hello}}</div>-->
+    <div id="movie_disp">
+        <a href="{{movieObj.homepage}}"> <div id="heading">{{movieObj.original_title}}</div></a>
+        <div id="tag">{{movieObj.tagline}}</div>
+        <img id="poster" width="250px" ng-src="{{movieObj.poster_path}}"/>
+        <div id="stats1">
+            <span class="left">{{relDate}} </span><span class="left val"> {{movieObj.release_date}}&nbsp; &nbsp;</span>
+            <span class="right">{{runTime}} </span><span class="right val"> {{movieObj.runtime}} {{timeUnit}}</span>
+        </div>
+        <div id="stats2">
+            <span class="left">{{prodCountry}}</span><span class="left val"> {{movieObj.production_countries[0].name}}&nbsp;&nbsp;</span>
+            <span class="right">{{prodCompany}} </span><span class="right val"> {{movieObj.production_companies[0].name}}</span>
+        </div>
+        <div id="summary"> {{movieObj.overview}}</div>
+    </div>
+    <div id="reviewForm" ng-controller="MovieReviewCtrl">
+        <form name="review" method="post">
+            <div id="inpwrap">
+            <input id="email" type="text" name="email" ng-model="email"/>
+                <span>{{email}}</span>
+            </div>
+            <textarea id="revArea" name="review" ng-model="reviewx"></textarea>
+            <span>{{reviewx}}</span>
+            <div id="btnwrap">
+            <button ng-click="saveReview($event)" id="submit">Submit Review</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css"/>
+    <title>Document</title>
+    <script src="/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+
+            document.forms.review.addEventListener('submit', function (event) {
+                event.preventDefault();
+                var self = event.target;
+                $.post('http://localhost:3000/review', {
+                    email: this.email.value,
+                    review: this.review.value,
+                    movieid: 275
+                }, function(data) {
+                    console.log(data);
+                    self.reset();
+                });
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+    <form name="review" method="post">
+        <input type="text" name="email"/>
+        <textarea name="review"></textarea>
+        <button>Submit</button>
+    </form>
+</body>
+</html>

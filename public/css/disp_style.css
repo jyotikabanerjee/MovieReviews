@@ -1,0 +1,126 @@
+html, body{
+    width:100%;
+    height:100%;
+    margin:0;
+    padding: 0;
+    font:300 1em "Helvetica Neue";
+}
+
+div#heading{
+    margin: 0;
+    padding: 0;
+    font: 500 1.2em "Helvetica Neue";
+
+}
+
+div#tag{
+    margin:0;
+    padding:0;
+    font: 300 0.85em "Helvetica Neue";
+}
+
+img{
+    margin-top: 0.5em;
+}
+
+div#movie_disp{
+    margin: 2em auto 0 auto;
+    max-width: 60%;
+    min-width: 0;
+    font:300 1em "Helvetica Neue";
+    text-align: center;
+    background-color: #eeeeee;
+    box-shadow: 0.25em 0.25em 0.25em 0.25em gray;
+}
+
+div#summary{
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    text-align:left;
+    padding: 0.2em;
+}
+
+div#stats1{
+    width:100%;
+    display: inline-block;
+    /*padding:0.2em;*/
+    margin: 0.2em;
+    text-align: center;
+}
+
+div#stats2{
+    width:100%;
+    display: inline-block;
+    /*padding: 0.2em;*/
+    margin: 0.2em;
+    text-align: center;
+}
+
+span.left{
+    /*float:left;*/
+}
+
+span.right{
+    /*float: right;
+    text-align: left;*/
+}
+
+span.val{
+    font-weight: 500;
+}
+
+div#not-found{
+    margin: 2em auto 0 auto;
+    width:20%;
+    font:500 1em "Helvetica Neue";
+    text-align: center;
+    background-color: transparent;
+}
+
+
+div#inpwrap{
+    max-width: 70%;
+    font: 300 1em "Helvetica Neue";
+    display:block;
+    margin: 1em auto 0.5em;
+}
+
+input#email{
+    width: 70%;
+    margin: 1em auto 0;
+}
+
+#reviewForm{
+    max-width: 60%;
+    margin: -1em auto 1em;
+    display: block;
+    background-color: #eeeeee;
+    box-shadow:0.25em 0.25em 0.25em 0.25em gray;
+    text-align: center;
+
+}
+
+form{
+    width: 70%;
+    display: block;
+    margin: 1em auto;
+}
+
+textarea#revArea{
+    width: 70%;
+    max-height: 30%;
+    display: inline-block;
+    font: 300 1em 'Helvetica Neue';
+    margin: 0.5em 0 0 1em;
+}
+
+button#submit{
+    width:40%;
+    font: 300 0.85em "Helvetica Neue";
+    margin: 1em auto 1em;
+}
+button#btnwrap{
+    max-width: 45%;
+    font: 300 1em "Helvetica Neue";
+    display: block;
+}

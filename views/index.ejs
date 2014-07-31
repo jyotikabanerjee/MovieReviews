@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html ng-app = "myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Movie Database</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/disp_style.css">
+    <script src="/js/configuration.js"></script>
+    <script src="/angular/angular.js"></script>
+    <script src="/angular-route/angular-route.js"></script>
+    <script>
+
+        var moviesApp = angular.module("myApp", ['ngRoute','movieControllers']);
+        moviesApp.config(['$routeProvider', function ($routeProvider){
+            $routeProvider.when('/movie_search', {
+                templateUrl: '/movie_search.html',
+                controller: 'MovieSearchCtrl'
+            }).when('/movie_disp/:id', {
+                templateUrl:'/movie_disp.html',
+                controller: 'MovieDispCtrl'
+            }).when('/movie_disp', {
+                templateUrl:'/notfound.html',
+                controller: 'MovieNotFoundCtrl'
+            }).otherwise({
+                redirectTo: '/movie_search'
+            })
+        }]);
+
+    </script>
+    <script>
+        var movieControllers = angular.module('movieControllers',[]);
+
+        /*First controller to define behaviour forsearch of movies*/
+        movieControllers.controller('MovieSearchCtrl', ['$scope', '$http', function($scope, $http){
+            //$scope.hello = "Hello World";
+            $scope.name = '';
+            $scope.callAjax =function (event){
+
+                if(event.keyCode === 13){
+
+                    var url = "http://api.themoviedb.org/3/search/movie?api_key="+api_key+"&query="+$scope.name;
+                    $http.get(url).success(function(data){
+                        $scope.movies = {};
+
+                        for(var i=0;i<data.results.length;i++){
+
+                            var id = data.results[i].id;
+                            data.results[i].nav_url = "http://localhost:3000/#/movie_disp/"+id;
+
+                            if(!data.results[i].poster_path){
+                                data.results[i].poster_path= "/img/no_image.gif";
+                            }
+                            else{
+                                data.results[i].poster_path = "http://image.tmdb.org/t/p/w500"+data.results[i].poster_path;
+                            }
+
+                            $scope.movies[data.results[i].title] = data.results[i];
+                        }
+                        console.log($scope.movies);
+                    });
+                }
+            }
+        }]);
+
+        /*First controller to define behaviour for specific movie dispay*/
+
+        movieControllers.controller('MovieDispCtrl', ['$scope', '$http','$routeParams', '$window', function($scope, $http,$routeParams, $window){
+            var id = $routeParams.id;
+
+            if(Number(id) < 1){
+                $window.location.href =  "#movie_disp";
+            }
+            else{
+                $scope.movieObj = {};
+                $scope.hello = "hello";
+                var url = "https://api.themoviedb.org/3/movie/"+id+"?api_key="+api_key;
+                console.log(url);
+                $scope.relDate= "";
+                $scope.runTime= "";
+                $scope.prodCountry = "";
+                $scope.prodCompany = "";
+                $scope.timeUnit = "";
+                $scope.msg = "";
+
+                //var data = $http.get()
+                $http.get(url).success(function(data) {
+                    //console.log(data);
+                    if (data) {
+                        $scope.relDate = "Release Date: ";
+                        $scope.runTime = "  Running time: ";
+                        $scope.prodCountry = "Production Country:  ";
+                        $scope.prodCompany = "  Production Company: ";
+                        $scope.timeUnit = "minutes";
+                        if (!data.poster_path) {
+                            data.poster_path = "no_image.gif";
+                        }
+                        else {
+                            data.poster_path = "http://image.tmdb.org/t/p/w500" + data.poster_path;
+                        }
+
+                        $scope.movieObj = data;
+                        console.log($scope.movieObj);
+                    }
+                }).error(function (){
+                    $window.location.href =  "#movie_disp";
+                });
+            }
+
+        }]);
+
+        movieControllers.controller('MovieNotFoundCtrl', ['$scope',function($scope){
+            console.log("Not found...");
+            $scope.msg = "Movie Not Found";
+        }]);
+
+        movieControllers.controller('MovieReviewCtrl', ['$scope','$http','$routeParams','$window',function($scope, $http,$routeParams, $window){
+
+                        $scope.email = "";
+                        $scope.reviewx = "";
+                        $scope.id = 10;
+
+                        $scope.movieid = Number($routeParams.id);
+
+                        $scope.saveReview = function(event){
+                             event.preventDefault();
+
+                            console.log($scope.email);
+                            console.log($scope.review);
+                            console.log($scope.movieid);
+
+                            var obj = {
+                                email: $scope.email,
+                                review: $scope.review,
+                                movieid: $scope.movieid
+                            };
+
+                            console.log(obj);
+
+                            var url = 'http://localhost:3000/review';
+
+                            console.log(url);
+
+                                    $http.post(url, obj).success(function (data){
+                                        console.log(data);
+                                    }).error(function(){
+                                        $window.location.href =  "#movie_disp";
+                                    });
+                            }
+        }]);
+    </script>
+</head>
+<body>
+<div ng-view>
+
+</div>
+</body>
+</html>
