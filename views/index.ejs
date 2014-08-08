@@ -56,7 +56,7 @@
 
                             $scope.movies[data.results[i].title] = data.results[i];
                         }
-                        console.log($scope.movies);
+                        //console.log($scope.movies);
                     });
                 }
             }
@@ -74,7 +74,7 @@
                 $scope.movieObj = {};
                 $scope.hello = "hello";
                 var url = "https://api.themoviedb.org/3/movie/"+id+"?api_key="+api_key;
-                console.log(url);
+                //console.log(url);
                 $scope.relDate= "";
                 $scope.runTime= "";
                 $scope.prodCountry = "";
@@ -99,7 +99,7 @@
                         }
 
                         $scope.movieObj = data;
-                        console.log($scope.movieObj);
+                        //console.log($scope.movieObj);
                     }
                 }).error(function (){
                     $window.location.href =  "#movie_disp";
@@ -110,7 +110,7 @@
         }]);
 
         movieControllers.controller('MovieNotFoundCtrl', ['$scope',function($scope){
-            console.log("Not found...");
+            //console.log("Not found...");
             $scope.msg = "Movie Not Found";
         }]);
 
@@ -128,13 +128,13 @@
                         $scope.saveReview = function(event){
                              event.preventDefault();
 
-                            console.log($scope.email);
-                            console.log($scope.reviewx);
-                            console.log($scope.movieid);
+                            //console.log($scope.email);
+                            //console.log($scope.reviewx);
+                            //console.log($scope.movieid);
 
 
                             if($scope.email === undefined || $scope.reviewx === undefined || $scope.movieid === undefined) {
-                                console.log("Review not updated... Invalid inputs");
+                                //console.log("Review not updated... Invalid inputs");
                                 /*var elem=  document.getElementById('reviewDetails');
                                 console.log(elem);
                                 elem.addClass("error");*/
@@ -155,21 +155,22 @@
                                 movieid: $scope.movieid
                             };
 
-                            console.log(obj);
+                            //console.log(obj);
 
                             var url = 'http://localhost:3000/review';
 
-                            console.log(url);
+                            //console.log(url);
 
                                     $http.post(url, obj).success(function (data){
-                                        console.log(data);
+                                        //console.log(data);
                                     }).error(function(){
                                         $window.location.href =  "#movie_disp";
                                     });
                             };
 
-                       //document.getElementById('#reviewDetails').reset();
-
+                      /* var form  =  document.getElementById('reviewDetails');
+                       console.log( form);
+                       form.reset();*/
 
         }]);
 
@@ -179,7 +180,7 @@
             $scope.movieid = Number($routeParams.id);
             var url = 'http://localhost:3000/review/'+$scope.movieid;
             $http.get(url).success(function(data){
-                console.log(data);
+                //console.log(data);
                 $scope.all_reviews = data;
             }).error(function(){
                 $window.location.href =  "#movie_disp";
@@ -197,13 +198,13 @@
                     code = code.substring(3,code.length-1);
                     var decimal = parseInt(code,16); //hex value
                     var ch = String.fromCharCode(decimal);
-                    console.log(ch);
+                    //console.log(ch);
                     return ch;
                 }
                 var str_unsanitized =  textContent.replace(/&#x[a-z0-9A-F]+;/gmi, getCharFromCode);
 
 
-                console.log(str_unsanitized);
+                //console.log(str_unsanitized);
 
                 return str_unsanitized;
             }
