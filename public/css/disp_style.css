@@ -124,3 +124,28 @@ button#btnwrap{
     font: 300 1em "Helvetica Neue";
     display: block;
 }
+
+#errDisp{
+    padding-bottom:1em;
+    margin-top: 0.5em;
+}
+
+
+.error{
+    border: 2px solid red;
+}
+
+#currReviewDisplay{
+    max-width: 60%;
+    margin: -1em auto 1em;
+    display: block;
+    background-color: #eeeeee;
+    box-shadow:0.25em 0.25em 0.25em 0.25em gray;
+    text-align: center;
+}
+
+#dispBlock{
+    margin: 1em auto;
+    padding: 2em;
+    border: 1px solid #aaa;
+}

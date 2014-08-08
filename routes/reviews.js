@@ -11,13 +11,14 @@ var reviewSchema = mongoose.Schema({
     review: String
 });*/
 
-
-var Review = mongoose.model('Review', {
-    email: 'string',
-    review: 'string',
-    movieid: 'number'
+var revSchema = mongoose.Schema({
+    email: {type: String, required:true},
+    review: {type: String, required:true},
+    movieid: {type: Number, required:true}
 });
 
+var Review = mongoose.model('Review', revSchema);
+//Model name is Review - database name will be reviews in MongoDB
 
 router.get('/', function (req, res) {
     res.render('review');
@@ -41,6 +42,16 @@ router.post('/', function (req, res) {
                 res.json(200, { message: 'Succesfully updated data ... ' });
             }
         });
+});
+
+
+router.get('/:id', function(req,res){
+    var i = req.params.id;
+  console.log(req.params.id);
+    Review.find({'movieid': i}, 'email review', function(err,docs){
+        res.json(docs);
+    });
+
 });
 
 module.exports = router;

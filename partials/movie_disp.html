@@ -16,16 +16,25 @@
         <div id="summary"> {{movieObj.overview}}</div>
     </div>
     <div id="reviewForm" ng-controller="MovieReviewCtrl">
-        <form name="review" method="post">
+        <form id="reviewDetails" name="review" method="post"  novalidate>
+            <div id="errDisp">
             <div id="inpwrap">
-            <input id="email" type="text" name="email" ng-model="email"/>
-                <span>{{email}}</span>
+            <input id="email" type="email" name="email" ng-model="email"/>
             </div>
             <textarea id="revArea" name="review" ng-model="reviewx"></textarea>
-            <span>{{reviewx}}</span>
+            </div>
             <div id="btnwrap">
-            <button ng-click="saveReview($event)" id="submit">Submit Review</button>
+            <button id="submit" ng-click="saveReview($event)">Submit Review</button>
             </div>
         </form>
+    </div>
+    <div id="currReviewDisplay" ng-controller="MovieReviewDisplayCtrl">
+        <div ng-repeat="rev in all_reviews">
+            <div id="dispBlock">
+                <div>Email: {{rev.email}}</div>
+                <!--<div>Review: {{rev.review}}</div>-->
+                <div>Review: {{rev.review | unescape}} </div>
+            </div>
+        </div>
     </div>
 </div>

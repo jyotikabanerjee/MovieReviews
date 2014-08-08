@@ -62,7 +62,7 @@
             }
         }]);
 
-        /*First controller to define behaviour for specific movie dispay*/
+        /*Second controller to define behaviour for specific movie dispay*/
 
         movieControllers.controller('MovieDispCtrl', ['$scope', '$http','$routeParams', '$window', function($scope, $http,$routeParams, $window){
             var id = $routeParams.id;
@@ -106,6 +106,7 @@
                 });
             }
 
+
         }]);
 
         movieControllers.controller('MovieNotFoundCtrl', ['$scope',function($scope){
@@ -113,11 +114,14 @@
             $scope.msg = "Movie Not Found";
         }]);
 
+
+        /** Controller to submit reviews for movies */
+
         movieControllers.controller('MovieReviewCtrl', ['$scope','$http','$routeParams','$window',function($scope, $http,$routeParams, $window){
 
                         $scope.email = "";
                         $scope.reviewx = "";
-                        $scope.id = 10;
+                        $scope.id = 0;
 
                         $scope.movieid = Number($routeParams.id);
 
@@ -125,12 +129,29 @@
                              event.preventDefault();
 
                             console.log($scope.email);
-                            console.log($scope.review);
+                            console.log($scope.reviewx);
                             console.log($scope.movieid);
+
+
+                            if($scope.email === undefined || $scope.reviewx === undefined || $scope.movieid === undefined) {
+                                console.log("Review not updated... Invalid inputs");
+                                /*var elem=  document.getElementById('reviewDetails');
+                                console.log(elem);
+                                elem.addClass("error");*/
+                                angular.element(document.getElementById('errDisp')).addClass('error');
+                                return;
+                            }
+
+                            //===============================================================
+                                /** Sanitization Code **/
+                                  var str_sanitized =  $scope.reviewx.replace(/[^a-z0-9A-Z ._]/gim, function(char){
+                                    return '&#x' + char.charCodeAt(0).toString(16) + ';';
+                                });
+                            //===============================================================
 
                             var obj = {
                                 email: $scope.email,
-                                review: $scope.review,
+                                review: str_sanitized,
                                 movieid: $scope.movieid
                             };
 
@@ -145,8 +166,52 @@
                                     }).error(function(){
                                         $window.location.href =  "#movie_disp";
                                     });
-                            }
+                            };
+
+                       //document.getElementById('#reviewDetails').reset();
+
+
         }]);
+
+        /** Controller to display existing reviews for movies */
+        movieControllers.controller('MovieReviewDisplayCtrl', ['$scope','$http','$routeParams','$window',function($scope, $http,$routeParams, $window){
+            $scope.all_reviews = "";
+            $scope.movieid = Number($routeParams.id);
+            var url = 'http://localhost:3000/review/'+$scope.movieid;
+            $http.get(url).success(function(data){
+                console.log(data);
+                $scope.all_reviews = data;
+            }).error(function(){
+                $window.location.href =  "#movie_disp";
+            });
+        }]);
+
+
+        /** Filter to get data for review from sanitized version saved in db*/
+
+        movieControllers.filter('unescape', function(){
+            return function(textContent){
+                //return textContent.length;
+
+                function getCharFromCode(code){
+                    code = code.substring(3,code.length-1);
+                    var decimal = parseInt(code,16); //hex value
+                    var ch = String.fromCharCode(decimal);
+                    console.log(ch);
+                    return ch;
+                }
+                var str_unsanitized =  textContent.replace(/&#x[a-z0-9A-F]+;/gmi, getCharFromCode);
+
+
+                console.log(str_unsanitized);
+
+                return str_unsanitized;
+            }
+        });
+
+
+
+
     </script>
 </head>
 <body>
